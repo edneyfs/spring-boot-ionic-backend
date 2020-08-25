@@ -7,16 +7,21 @@ import org.springframework.stereotype.Service;
 
 import com.efs.cursomc.domain.Categoria;
 import com.efs.cursomc.repositories.CategoriaRepository;
+import com.efs.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
 
-	//será automaticamente instaciada pelo spring
+	//instanciado automaticamente pelo spring
 	@Autowired
 	private CategoriaRepository repo;
 	
 	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		
+		//retorna o objetp ou exception
+		return obj.orElseThrow(
+				() -> new ObjectNotFoundException(
+						"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 }
