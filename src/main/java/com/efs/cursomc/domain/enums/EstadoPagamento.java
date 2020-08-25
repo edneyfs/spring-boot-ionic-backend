@@ -1,14 +1,15 @@
 package com.efs.cursomc.domain.enums;
 
-public enum TipoCliente {
+public enum EstadoPagamento {
 
-	PESSOAFISICA(1, "Pessoa Física"), 
-	PESSOAJURIDICA(2, "Pessoa Jurídica");
+	PENDENTE(1, "Pendente"),
+	QUITADO(2, "Quitado"),
+	CANCELADO(3, "Cancelado");
 
 	private Integer codigo;
 	private String descricao;
 
-	private TipoCliente(Integer codigo, String descricao) {
+	private EstadoPagamento(Integer codigo, String descricao) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 	}
@@ -21,15 +22,15 @@ public enum TipoCliente {
 		return descricao;
 	}
 
-	public static TipoCliente toEnum(Integer id) {
+	public static EstadoPagamento toEnum(Integer id) {
 		
 		if (id == null) {
 			return null;
 		}
 		
-		for (TipoCliente tipoCliente : TipoCliente.values()) {
-			if (tipoCliente.getCodigo().equals(id)) {
-				return tipoCliente;
+		for (EstadoPagamento estadoPagamento : EstadoPagamento.values()) {
+			if (estadoPagamento.getCodigo().equals(id)) {
+				return estadoPagamento;
 			}
 		}
 
