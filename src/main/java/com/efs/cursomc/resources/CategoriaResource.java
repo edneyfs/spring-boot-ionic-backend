@@ -1,6 +1,8 @@
 package com.efs.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.efs.cursomc.domain.Categoria;
+import com.efs.cursomc.dto.CategoriaDTO;
 import com.efs.cursomc.services.CategoriaService;
 
 @RestController
@@ -27,6 +30,16 @@ public class CategoriaResource {
 		Categoria obj = service.find(id);
 		//ResponseEntity - add informaçoes de uma comunicaçao rest http
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> find() {
+		
+		List<Categoria> list = service.findAll();
+		// percorrer a lista (stream), map (efetua uma operaçõa para cada elemento da lista), (collect) retorna a lista
+		List<CategoriaDTO> listDTO = list.stream().map(
+				categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
