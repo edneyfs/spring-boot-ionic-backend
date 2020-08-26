@@ -15,11 +15,11 @@ import com.efs.cursomc.services.PedidoServices;
 public class PedidoResource {
 	
 	@Autowired
-	private PedidoServices services;
+	private PedidoServices service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
-		Pedido pedido = services.find(id);
+		Pedido pedido = service.find(id);
 		return ResponseEntity.ok().body(pedido);
 	}
 }
