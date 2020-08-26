@@ -1,9 +1,9 @@
 package com.efs.cursomc.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import java.io.Serializable;
 
 import com.efs.cursomc.domain.Categoria;
 

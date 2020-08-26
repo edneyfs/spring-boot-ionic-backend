@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,10 +87,6 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	/*
-	 *  TODO: o @Valid não esta chamando o size, @Validated funcionou apenas no update
-	 */
-	
 	/**
 	 * 
 	 * @param obj
@@ -99,7 +94,7 @@ public class CategoriaResource {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Validated @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
 		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
