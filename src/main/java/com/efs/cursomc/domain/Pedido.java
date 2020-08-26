@@ -33,12 +33,12 @@ public class Pedido implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
 	
-	@JsonManagedReference // deixa serealizar
+	// @JsonManagedReference --> deixa serealizar, mas deu erro com o @JsonBackReference - alterado por @JsonIgonore e apaga este
 	// para não dar erro de Entidade transiente quando vai salvar o pedido com o pagamento, mappedBy = "pedido" foi informado na outra classe
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
-	@JsonManagedReference // deixa serealizar
+	// @JsonManagedReference --> deixa serealizar, mas deu erro com o @JsonBackReference - alterado por @JsonIgonore e apaga este
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;

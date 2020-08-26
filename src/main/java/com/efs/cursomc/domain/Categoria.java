@@ -25,8 +25,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	//ajustar para nao ocorrer referencia ciclica --> vai serializar os produtos
-	@JsonManagedReference
+	// @JsonManagedReference --> deixa serealizar, mas deu erro com o @JsonBackReference - alterado por @JsonIgonore e apaga este
 	//informa que o mapeamento foi definido na classe Produto.categorias
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<Produto>();
