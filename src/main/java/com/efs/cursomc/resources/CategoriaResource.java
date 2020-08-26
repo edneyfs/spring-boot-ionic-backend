@@ -4,9 +4,12 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +29,22 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) { // @PathVariable faz a ligação com o parametro value={id}
 		Categoria obj = service.find(id);
 		//ResponseEntity - add informaçoes de uma comunicaçao rest http
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
@@ -44,6 +55,9 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	/**
+	 * 
+	 */
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
@@ -52,27 +66,51 @@ public class CategoriaResource {
 			@RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
 		
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		
 		//Page já é java 8
 		Page<CategoriaDTO> listDTO = list.map(
 				categoria -> new CategoriaDTO(categoria));
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	/**
+	 * 
+	 * @param objDTO
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) { // (@RequestBody converte o JSON neste objeto
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) { // (@RequestBody converte o JSON neste objeto / @Valid vai chamar as validações da classe DTO
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
+
 		//pega a URI para pesquisa este novo objeto (boa pratica)
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
+	/*
+	 *  TODO: o @Valid não esta chamando o size, @Validated funcionou apenas no update
+	 */
+	
+	/**
+	 * 
+	 * @param obj
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Validated @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) { // @PathVariable faz a ligação com o parametro value={id}
 		service.delete(id);
