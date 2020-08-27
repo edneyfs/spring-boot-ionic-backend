@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.efs.cursomc.domain.Cliente;
 import com.efs.cursomc.dto.ClienteDTO;
+import com.efs.cursomc.dto.ClienteNewDTO;
 import com.efs.cursomc.services.ClienteServices;
 
 @RestController
@@ -73,7 +74,7 @@ public class ClienteResource {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO) { // (@RequestBody converte o JSON neste objeto / @Valid vai chamar as validações da classe DTO
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) { // (@RequestBody converte o JSON neste objeto / @Valid vai chamar as validações da classe DTO
 		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 
