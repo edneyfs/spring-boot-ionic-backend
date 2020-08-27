@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class Cliente implements Serializable {
 	private Integer tipoCliente;
 	
 	// @JsonManagedReference --> deixa serealizar, mas deu erro com o @JsonBackReference - alterado por @JsonIgonore e apaga este
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //cascade = CascadeType.ALL --> toda operação em cliente, reflete no endereco (ex: apagar)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@ElementCollection
@@ -42,7 +43,7 @@ public class Cliente implements Serializable {
 	private Set<String> telefones = new TreeSet<String>();
 	
 	@JsonIgnore // NÃO deixa serealizar
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente") // NÂO podemos apagar um cliente com pedidos, então não coloca o cascade, irá levantar erro se for apagar (DataIntegrityViolationException)
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public Cliente() {
