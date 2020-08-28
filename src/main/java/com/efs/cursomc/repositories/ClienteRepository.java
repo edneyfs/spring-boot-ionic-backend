@@ -6,6 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.efs.cursomc.domain.Cliente;
 
+/**
+ * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
+ * 5.3.2. Query Creation
+ * exemplo de metodos automaticos de consulta: ex: fingBi"Email"
+ * 
+ * 
+ * @author edney.siqueira
+ *
+ */
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 

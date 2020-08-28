@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -19,8 +18,6 @@ import com.efs.cursomc.resources.exception.FieldMessage;
 
 public class ClienteUpdateValidator extends UtilValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
 
-	private static final Logger LOGGER = Logger.getLogger(ClienteUpdateValidator.class);
-	
 	@Autowired
 	private HttpServletRequest request; //pega os parametros da URI, queremos o id
 	
@@ -33,13 +30,11 @@ public class ClienteUpdateValidator extends UtilValidator implements ConstraintV
 
 	@Override
 	public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
-		LOGGER.info("Executar regras validação do " + objDto.getClass().getSimpleName());
 
 		//pega as informações da URI enviadas por parametros no link
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Integer uriId = Integer.parseInt(map.get("id"));
-		LOGGER.info("Criado metodo para facilitar - id: " + this.getParametro("id"));
 		
 		List<FieldMessage> list = new ArrayList<>();
 

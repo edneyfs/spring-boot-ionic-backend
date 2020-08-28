@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import com.efs.cursomc.services.validation.ClienteInsert;
 
 @ClienteInsert
-public class ClienteNewDTO  implements Serializable {
+public class ClienteNewDTO implements Serializable {
 
 	/**
 	 * 
