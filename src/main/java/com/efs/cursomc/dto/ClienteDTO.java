@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.efs.cursomc.domain.Cliente;
+import com.efs.cursomc.services.validation.ClienteUpdate;
 
 /**
  * Não pode mudar o CPF/CNPJ
@@ -15,6 +16,7 @@ import com.efs.cursomc.domain.Cliente;
  * @author edney.siqueira
  *
  */
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	/**
