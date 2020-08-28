@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido implements Serializable {
 
-	
 	/**
 	 * 
 	 */
@@ -35,6 +34,10 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
+	public Double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	public ItemPedidoPK getId() {
 		return id;
 	}
