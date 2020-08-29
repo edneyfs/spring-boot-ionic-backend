@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Pedido implements Serializable {
+public class Pedido implements Serializable, BeanID {
 
 	/**
 	 * 
@@ -63,7 +63,7 @@ public class Pedido implements Serializable {
 	public double getValorTotal() {
 		double soma = 0.0;
 		for (ItemPedido item: itens) {
-			soma = soma +item.getSubTotal();
+			soma = soma + item.getSubTotal();
 		}
 		return soma;
 	}

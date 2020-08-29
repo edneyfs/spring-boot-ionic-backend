@@ -3,8 +3,10 @@ package com.efs.cursomc.domain;
 import javax.persistence.Entity;
 
 import com.efs.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("pagamentoComCartao") // para instancia esta classe via Serealização, basta setar o type com este nome
 public class PagamentoComCartao extends Pagamento {
 
 	private static final long serialVersionUID = 1L;

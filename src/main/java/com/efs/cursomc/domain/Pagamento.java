@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import com.efs.cursomc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 /*
@@ -21,6 +22,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 		TABLE_PAR: ??
  */
 @Inheritance(strategy = InheritanceType.JOINED)
+/*
+ * minha classe Pagamento terá um campo adicional chamado "type" --> definir nas
+ * subclasses os valores dos type para que esta possa ser instanciada.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
 	/**
