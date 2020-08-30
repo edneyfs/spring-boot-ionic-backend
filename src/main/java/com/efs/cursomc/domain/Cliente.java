@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@Column(unique = true) // não deixa o banco de dados incluir um email que já exista;
+	@Column(unique = true,length = 170) // não deixa o banco de dados incluir um email que já exista;
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipoCliente;

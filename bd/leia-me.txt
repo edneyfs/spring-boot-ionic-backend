@@ -1,0 +1,29 @@
+Dump da base de dados para o Heroku
+1) Gere um backup da base de dados local:
+mysqldump -u user -p dbname > arquivo.sql
+Exemplo: mysqldump -u root -p curso_spring > arquivo.sql
+
+
+2) Associe o repositório local com o Heroku:
+Acesse o terminal (no Windows o Git Bash) na pasta do projeto:
+heroku git:remote -a curso-spring-ionic
+
+
+
+associando oo heroku
+$ heroku git:remote -a edneyfs-curso-spring-ionic
+
+
+$ git remote -v
+heroku  https://git.heroku.com/edneyfs-curso-spring-ionic.git (fetch)
+heroku  https://git.heroku.com/edneyfs-curso-spring-ionic.git (push)
+origin  https://github.com/edneyfs/spring-boot-ionic-backend.git (fetch)
+origin  https://github.com/edneyfs/spring-boot-ionic-backend.git (push)
+
+pegar a URL de conexão com o banco de dados na nuvem
+$ heroku config | grep CLEARDB_DATABASE_URL
+CLEARDB_DATABASE_URL: mysql://b19e2f4ae1022a:39c2dbc8@us-cdbr-east-02.cleardb.com/heroku_003407ad43f62ab?reconnect=true
+
+
+comando para importar pro heroku (executar na pasta onde esta arquivo.sql)
+mysql --host=us-cdbr-east-02.cleardb.com --user=b19e2f4ae1022a --password=39c2dbc8 --reconnect heroku_003407ad43f62ab < arquivo.sql
