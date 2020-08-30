@@ -34,6 +34,10 @@ public class PedidoServices {
 	@Autowired
 	private ClienteServices clienteServices;
 	
+	//vai procurar uma classe com @Configuration e um email com @Bean com o nome emailServices que retorne o objeto definido aqui 
+	@Autowired
+	private EmailServices emailServices;
+	
 	public Pedido find(Integer id) {
 		Optional<Pedido> op = repo.findById(id);
 		return op.orElseThrow(
@@ -69,7 +73,7 @@ public class PedidoServices {
 		}
 		itemPedidoRepository.saveAll(pedido.getItens());
 		
-		System.out.println(pedido);
+		emailServices.sendOrderConfirmationEmail(pedido);
 		
 		return pedido;
 	}
