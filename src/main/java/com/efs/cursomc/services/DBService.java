@@ -20,6 +20,7 @@ import com.efs.cursomc.domain.PagamentoComCartao;
 import com.efs.cursomc.domain.Pedido;
 import com.efs.cursomc.domain.Produto;
 import com.efs.cursomc.domain.enums.EstadoPagamento;
+import com.efs.cursomc.domain.enums.Perfil;
 import com.efs.cursomc.domain.enums.TipoCliente;
 import com.efs.cursomc.repositories.CategoriaRepository;
 import com.efs.cursomc.repositories.CidadeRepository;
@@ -127,14 +128,21 @@ public class DBService {
 		String senhaEncode = bCryptPasswordEncoder.encode("123");
 		Cliente cli1 = new Cliente(null, "Maria Silva", "projetos.estudo.ti@gmail.com", "190", TipoCliente.PESSOAFISICA, senhaEncode);
 		cli1.getTelefones().addAll(Arrays.asList("111111", "2222222"));
+		
+		Cliente cli2 = new Cliente(null, "Ana Costa", "edneyfs@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, senhaEncode);
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("3333333", "44444444"));
+
 
 		Endereco e1 = new Endereco(null, "Rua flores", "123", "nada", "Jardins", "123465", cli1, c1);
 		Endereco e2 = new Endereco(null, "Av. Matos", "105", "sala 10", "Centro", "456465", cli1, c2);
+		Endereco e3 = new Endereco(null, "Av. Floriano", "2006", null, "Centro", "78945", cli2, c2);
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 		
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 		
 
 		//------------------------------------------------------
