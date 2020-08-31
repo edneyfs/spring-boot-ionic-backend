@@ -20,6 +20,8 @@ public class TesteConfig {
 	
 	@Bean
 	public boolean instantieteDatabase() throws ParseException {
+		System.out.println("******INICIANDO EM AMBIENTE DE TESTE ****");
+		
 		dbService.instantiateTestDatabese();
 		
 		System.out.println("");
@@ -29,7 +31,7 @@ public class TesteConfig {
 	}
 	
 	@Bean
-	public EmailServices emailServices() {
+	public EmailServices emailService() {
 		return new MockEmailService();
 	}
 }

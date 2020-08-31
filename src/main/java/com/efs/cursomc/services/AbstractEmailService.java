@@ -8,8 +8,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -18,13 +16,10 @@ import com.efs.cursomc.domain.Pedido;
 public abstract class AbstractEmailService implements EmailServices {
 
 	@Value("${default.sender}")
-	private String sender;
+	protected String sender;
 	
 	@Autowired
 	private TemplateEngine templateEngine;
-	
-	@Autowired
-	protected JavaMailSender javaMailSender; 
 	
 	@Override
 	public void sendOrderConfirmationEmail(Pedido pedido) {
@@ -37,10 +32,13 @@ public abstract class AbstractEmailService implements EmailServices {
 		try {
 			MimeMessage msg = this.prepareMimeMessageFromPedido(pedido);
 			sendHtmlEmail(msg);
+			
 		} catch (MessagingException e) {
 			this.sendOrderConfirmationEmail(pedido);
 		}
 	}
+
+	protected abstract MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException;
 
 	protected String htmlFromTemplatePedido(Pedido pedido) {
 		Context context = new Context();
@@ -59,18 +57,5 @@ public abstract class AbstractEmailService implements EmailServices {
 		msg.setSentDate(new Date(System.currentTimeMillis()));
 		msg.setText(pedido.toString());
 		return msg;
-	}
-	
-	private MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException {
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
-		
-		mmh.setTo(pedido.getCliente().getEmail());
-		mmh.setFrom(sender);
-		mmh.setSubject("Pedido confirmado! Código: " + pedido.getId());
-		mmh.setSentDate(new Date(System.currentTimeMillis()));
-		mmh.setText(this.htmlFromTemplatePedido(pedido), true);		
-		
-		return mimeMessage;
 	}
 }
