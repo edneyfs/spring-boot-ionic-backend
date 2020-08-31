@@ -11,20 +11,20 @@ import com.efs.cursomc.domain.Pedido;
 
 public class MockEmailService extends AbstractEmailService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MockEmailService.class);
 	
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
-		LOG.info("Simulando o envio de email...");
-		LOG.info(msg.toString());
-		LOG.info("Email enviado");
+		LOGGER.info("Simulando o envio de email...");
+		LOGGER.info(msg.toString());
+		LOGGER.info("Email enviado");
 	}
 
 	@Override
 	public void sendHtmlEmail(MimeMessage msg) {
-		LOG.info("Simulando o envio de email HTML...");
-		LOG.info(msg.toString());
-		LOG.info("Email enviado");		
+		LOGGER.info("Simulando o envio de email HTML...");
+		LOGGER.info(msg.toString());
+		LOGGER.info("Email enviado");		
 	}
 
 	@Override

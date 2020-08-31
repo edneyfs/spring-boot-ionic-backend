@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.efs.cursomc.security.JWTAuthenticationFilter;
+import com.efs.cursomc.security.JWTAuthorizationFilter;
 import com.efs.cursomc.security.JWTUtil;
 
 @Configuration
@@ -64,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		
 		http.addFilter(new JWTAuthenticationFilter(this.authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(this.authenticationManager(), jwtUtil, userDetailsService));
 		
 		//nosso back-and não ira criar sessao de usuario
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
