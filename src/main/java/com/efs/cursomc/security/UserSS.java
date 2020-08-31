@@ -29,8 +29,6 @@ public class UserSS implements UserDetails {
 	public UserSS() {
 	}
 	
-	
-	
 	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
 		super();
 		this.id = id;
@@ -38,8 +36,6 @@ public class UserSS implements UserDetails {
 		this.senha = senha;
 		this.authorities = perfis.stream().map( x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
 	}
-
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -90,5 +86,14 @@ public class UserSS implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	/**
+	 * Verifica se o usuário possui na lista o perfil passado por parametro. 
+	 * @param perfil
+	 * @return
+	 */
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 }

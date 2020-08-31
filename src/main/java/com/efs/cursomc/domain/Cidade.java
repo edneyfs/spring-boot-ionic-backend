@@ -12,10 +12,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Cidade implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6349995040067136060L;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +37,11 @@ public class Cidade implements Serializable {
 
 	public Cidade(String nome, Estado estado) {
 		this(nome);
+		this.estado = estado;
+	}
+	
+	public Cidade(Integer id, String nome, Estado estado) {
+		this(id, nome);
 		this.estado = estado;
 	}
 

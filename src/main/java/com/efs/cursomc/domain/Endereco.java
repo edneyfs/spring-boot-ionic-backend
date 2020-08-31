@@ -14,10 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Endereco implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2773670150221401547L;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +25,14 @@ public class Endereco implements Serializable {
 	private String bairro;
 	private String cep;
 	
-	@ManyToOne
-	@JoinColumn(name = "cidade_id")
-	private Cidade cidade;
-	
 	@JsonIgnore 	//não referencia o cliente (referencia ciclica)
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name="cidade_id")
+	private Cidade cidade;
 	
 	public Endereco() {
 	}

@@ -25,11 +25,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9191918241864222266L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,20 +42,20 @@ public class Cliente implements Serializable {
 	private String senha;
 	
 	// @JsonManagedReference --> deixa serealizar, mas deu erro com o @JsonBackReference - alterado por @JsonIgonore e apaga este
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //cascade = CascadeType.ALL --> toda operação em cliente, reflete no endereco (ex: apagar)
+	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL) //cascade = CascadeType.ALL --> toda operação em cliente, reflete no endereco (ex: apagar)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
-	private Set<String> telefones = new TreeSet<String>();
-	
-	@JsonIgnore // NÃO deixa serealizar
-	@OneToMany(mappedBy = "cliente") // NÂO podemos apagar um cliente com pedidos, então não coloca o cascade, irá levantar erro se for apagar (DataIntegrityViolationException)
-	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	private Set<String> telefones = new HashSet<String>();
 	
 	@ElementCollection(fetch=FetchType.EAGER) // sempre ira retornar 
 	@CollectionTable(name = "PERFIS")
 	private Set<Integer> perfis = new HashSet<Integer>();
+	
+	@JsonIgnore // NÃO deixa serealizar
+	@OneToMany(mappedBy = "cliente") // NÂO podemos apagar um cliente com pedidos, então não coloca o cascade, irá levantar erro se for apagar (DataIntegrityViolationException)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public Cliente() {
 	}

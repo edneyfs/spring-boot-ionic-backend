@@ -34,7 +34,7 @@ import com.efs.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
-
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
@@ -134,22 +134,24 @@ public class DBService {
 		cli2.getTelefones().addAll(Arrays.asList("3333333", "44444444"));
 
 
-		Endereco e1 = new Endereco(null, "Rua flores", "123", "nada", "Jardins", "123465", cli1, c1);
-		Endereco e2 = new Endereco(null, "Av. Matos", "105", "sala 10", "Centro", "456465", cli1, c2);
-		Endereco e3 = new Endereco(null, "Av. Floriano", "2006", null, "Centro", "78945", cli2, c2);
+//		Endereco e1 = new Endereco(null, "Rua flores", "123", "nada", "Jardins", "123465", cli1, c1);
+//		Endereco e2 = new Endereco(null, "Av. Matos", "105", "sala 10", "Centro", "456465", cli1, c2);
+//		Endereco e3 = new Endereco(null, "Av. Floriano", "2006", null, "Centro", "78945", cli2, c2);
 
-		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-		cli2.getEnderecos().addAll(Arrays.asList(e3));
+//		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+//		cli2.getEnderecos().addAll(Arrays.asList(e3));
 		
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
+//		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 		
 
 		//------------------------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
-		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+//		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+//		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, null);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, null);
 		
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
