@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,6 +25,7 @@ import com.efs.cursomc.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) // permite auterizar para perfis diferentes
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -43,7 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**",
+			"/categorias/**"};
+	
+	//permitir só o POST (para a pessoa poder se cadastrar)
+	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/clientes/**"};
 
 	@Override
@@ -56,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
+				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 				// não precisa de autencicação - apenas metodos GETs
 				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 				// não precisa de autencicação
