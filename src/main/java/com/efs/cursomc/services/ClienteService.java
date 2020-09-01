@@ -1,10 +1,14 @@
 package com.efs.cursomc.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +34,9 @@ import com.efs.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
+
 
 	@Autowired
 	private ClienteRepository repo;
@@ -42,6 +49,12 @@ public class ClienteService {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
 	
 	public Cliente find(Integer id) {
 		
@@ -126,13 +139,12 @@ public class ClienteService {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		
-		URI uri = s3Service.uploadFile(multipartFile);
-		
-		Cliente cliente = repo.findById(user.getId()).orElse(null);
-		cliente.setImageUrl(uri.toString());
-		repo.save(cliente);
 
-		return uri;
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = prefix + user.getId() + ".jpg";
+		LOGGER.info("Enviando ao S3 a imagem: " + fileName);
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
