@@ -9,8 +9,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.efs.cursomc.services.exception.AuthorizationException;
 import com.efs.cursomc.services.exception.DateIntegrityException;
+import com.efs.cursomc.services.exception.FileException;
 import com.efs.cursomc.services.exception.ObjectNotFoundException;
 
 //intercepta mensagens
@@ -72,4 +76,64 @@ public class ResourceExceptionHandler {
 		StandardErros err = new StandardErros(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
+	
+	/**
+	 * 
+	 * @param e
+	 * @param request
+	 * @return
+	 */
+	//tratador de excecao do ObjectNotFoundException
+	@ExceptionHandler(FileException.class)
+	public ResponseEntity<StandardErros> file(FileException e, HttpServletRequest request) {
+		//FORBIDDEN acesso negado
+		StandardErros err = new StandardErros(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 * @param request
+	 * @return
+	 */
+	//tratador de excecao do ObjectNotFoundException
+	@ExceptionHandler(AmazonServiceException.class)
+	public ResponseEntity<StandardErros> amazonService(AmazonServiceException e, HttpServletRequest request) {
+		//FORBIDDEN acesso negado
+		HttpStatus code = HttpStatus.valueOf(e.getErrorCode());
+		StandardErros err = new StandardErros(code.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(code).body(err);
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 * @param request
+	 * @return
+	 */
+	//tratador de excecao do ObjectNotFoundException
+	@ExceptionHandler(AmazonClientException.class)
+	public ResponseEntity<StandardErros> amazonClient(AmazonClientException e, HttpServletRequest request) {
+		//FORBIDDEN acesso negado
+		StandardErros err = new StandardErros(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 * @param request
+	 * @return
+	 */
+	//tratador de excecao do ObjectNotFoundException
+	@ExceptionHandler(AmazonS3Exception.class)
+	public ResponseEntity<StandardErros> amazonS3(AmazonS3Exception e, HttpServletRequest request) {
+		//FORBIDDEN acesso negado
+		StandardErros err = new StandardErros(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	
+	
 }
