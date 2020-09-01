@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 import com.efs.cursomc.domain.Pedido;
 
-public interface EmailServices {
+public interface EmailService {
 
 	void sendOrderConfirmationEmail(Pedido pedido);
 	

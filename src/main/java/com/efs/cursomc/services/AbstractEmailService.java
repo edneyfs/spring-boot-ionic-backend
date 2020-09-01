@@ -13,7 +13,7 @@ import org.thymeleaf.context.Context;
 
 import com.efs.cursomc.domain.Pedido;
 
-public abstract class AbstractEmailService implements EmailServices {
+public abstract class AbstractEmailService implements EmailService {
 
 	@Value("${default.sender}")
 	protected String sender;

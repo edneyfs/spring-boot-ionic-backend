@@ -27,7 +27,7 @@ import com.efs.cursomc.services.exception.DateIntegrityException;
 import com.efs.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
-public class ClienteServices {
+public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;

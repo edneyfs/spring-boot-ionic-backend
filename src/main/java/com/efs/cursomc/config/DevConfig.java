@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.efs.cursomc.services.DBService;
-import com.efs.cursomc.services.EmailServices;
+import com.efs.cursomc.services.EmailService;
 import com.efs.cursomc.services.SmtpEmailService;
 
 @Configuration
@@ -31,7 +31,7 @@ public class DevConfig {
 		if ( ! "create".equals(strategy)) {
 			retorno =  false;
 		} else {
-			dbService.instantiateTestDatabese();
+			dbService.instantiateTestDatabase();
 			retorno = true;
 		}
 		
@@ -43,7 +43,7 @@ public class DevConfig {
 	}
 	
 	@Bean
-	public EmailServices emailServices() {
+	public EmailService emailServices() {
 		return new SmtpEmailService();
 	}
 }

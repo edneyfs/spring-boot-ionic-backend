@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.efs.cursomc.domain.Produto;
 import com.efs.cursomc.dto.ProdutoDTO;
 import com.efs.cursomc.resources.utils.URL;
-import com.efs.cursomc.services.ProdutoServices;
+import com.efs.cursomc.services.ProdutoService;
 
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
 	
 	@Autowired
-	private ProdutoServices service;
+	private ProdutoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {

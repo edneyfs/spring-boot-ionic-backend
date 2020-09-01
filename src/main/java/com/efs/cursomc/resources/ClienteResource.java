@@ -21,14 +21,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.efs.cursomc.domain.Cliente;
 import com.efs.cursomc.dto.ClienteDTO;
 import com.efs.cursomc.dto.ClienteNewDTO;
-import com.efs.cursomc.services.ClienteServices;
+import com.efs.cursomc.services.ClienteService;
 
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
 	
 	@Autowired
-	private ClienteServices service;
+	private ClienteService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {

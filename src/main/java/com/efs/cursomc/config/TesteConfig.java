@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.efs.cursomc.services.DBService;
-import com.efs.cursomc.services.EmailServices;
+import com.efs.cursomc.services.EmailService;
 import com.efs.cursomc.services.MockEmailService;
 
 @Configuration
@@ -22,7 +22,7 @@ public class TesteConfig {
 	public boolean instantieteDatabase() throws ParseException {
 		System.out.println("******INICIANDO EM AMBIENTE DE TESTE ****");
 		
-		dbService.instantiateTestDatabese();
+		dbService.instantiateTestDatabase();
 		
 		System.out.println("");
 		System.out.println("");
@@ -31,7 +31,7 @@ public class TesteConfig {
 	}
 	
 	@Bean
-	public EmailServices emailService() {
+	public EmailService emailService() {
 		return new MockEmailService();
 	}
 }

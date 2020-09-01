@@ -25,7 +25,7 @@ import com.efs.cursomc.services.exception.ObjectNotFoundException;
  *
  */
 @Service
-public class ProdutoServices {
+public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository repo;
