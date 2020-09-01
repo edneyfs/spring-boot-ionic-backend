@@ -47,9 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/produtos/**",
 			"/categorias/**"};
 	
-	//permitir só o POST (para a pessoa poder se cadastrar)
+	//permitir acessar sem estar logado - só o POST (para a pessoa poder se cadastrar)
 	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/clientes/**"};
+			"/clientes/**",
+			"/auth/forgot/**"};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

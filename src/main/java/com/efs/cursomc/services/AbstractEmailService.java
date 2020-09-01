@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.efs.cursomc.domain.Cliente;
 import com.efs.cursomc.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -56,6 +57,22 @@ public abstract class AbstractEmailService implements EmailService {
 		msg.setSubject("Pedido confirmado! Código: " + pedido.getId());
 		msg.setSentDate(new Date(System.currentTimeMillis()));
 		msg.setText(pedido.toString());
+		return msg;
+	}
+
+	@Override
+	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
+		SimpleMailMessage msg = this.prepareNewPasswordEmail(cliente, newPass);
+		sendEmail(msg);
+	}
+
+	private SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(cliente.getEmail());
+		msg.setFrom(sender);
+		msg.setSubject("Solicitação de nova senha");
+		msg.setSentDate(new Date(System.currentTimeMillis()));
+		msg.setText("Nova senha: " + newPass);
 		return msg;
 	}
 }
