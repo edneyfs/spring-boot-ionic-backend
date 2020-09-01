@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//permitir acessar sem estar logado - só o POST (para a pessoa poder se cadastrar)
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/clientes",
-			"/clientes/picture",
 			"/auth/forgot/**"};
 
 	@Override

@@ -57,6 +57,8 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente") // NÂO podemos apagar um cliente com pedidos, então não coloca o cascade, irá levantar erro se for apagar (DataIntegrityViolationException)
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
+	private String imageUrl;
+	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -172,5 +174,13 @@ public class Cliente implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 }
