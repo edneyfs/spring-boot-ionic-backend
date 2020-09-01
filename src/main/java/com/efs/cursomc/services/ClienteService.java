@@ -55,6 +55,9 @@ public class ClienteService {
 	
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
+
+	@Value("${img.profile.size}")
+	private Integer size;
 	
 	public Cliente find(Integer id) {
 		
@@ -142,6 +145,13 @@ public class ClienteService {
 
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		LOGGER.info("ajustando para deixar a foto quadrada");
+		jpgImage = imageService.cropSquare(jpgImage);
+		
+		LOGGER.info("ajustando tamando da imagem (size): " + size);
+		jpgImage = imageService.resize(jpgImage, size);
+		
 		String fileName = prefix + user.getId() + ".jpg";
 		LOGGER.info("Enviando ao S3 a imagem: " + fileName);
 		

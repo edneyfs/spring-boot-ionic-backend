@@ -11,6 +11,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,5 +63,31 @@ public class ImageService {
 		} catch (IOException e) {
 			throw new FileException("Erro ao ler arquivo");
 		}
+	}
+	
+	/**
+	 * corta uma imagem
+	 */
+	public BufferedImage cropSquare(BufferedImage sourceImg) {
+		//qual o minumo, altura ou largura?
+		int min = (sourceImg.getHeight() <= sourceImg.getWidth()) ? sourceImg.getHeight() : sourceImg.getWidth();
+		
+		// recorta a imagem
+		return Scalr.crop(
+			sourceImg, 
+			(sourceImg.getWidth()/2) - (min/2), // vai na metade de tira das pontas 
+			(sourceImg.getHeight()/2) - (min/2),  // vai na metade de tira das pontas
+			min, 
+			min);		
+	}
+
+	/**
+	 * diminui o tamanho da imagem
+	 * @param sourceImg
+	 * @param size
+	 * @return
+	 */
+	public BufferedImage resize(BufferedImage sourceImg, int size) {
+		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, size);
 	}
 }
