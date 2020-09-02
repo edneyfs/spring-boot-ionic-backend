@@ -18,6 +18,9 @@ public class JWTUtil {
 	
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String BEARER = "Bearer ";
+	public static final String LOCATION = "location";
+
+	public static final String EXPOR_ACESSO_AO_HEADER = "access-control-expose-headers";
 
 	@Value("${jwt.secret}")
 	private String secret;
