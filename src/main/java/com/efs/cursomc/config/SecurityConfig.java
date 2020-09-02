@@ -64,22 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-				
-				
-				
-				//TODO remover
-				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_POST).permitAll()
-				//TODO remover
-				
-				
-				
 				// não precisa de autencicação - apenas metodos GETs
 				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 				// não precisa de autencicação
 				.antMatchers(PUBLIC_MATCHERS).permitAll()
 				// pra todo o resto, precisa de autencicação
 				.anyRequest().authenticated();
-		
 		
 		http.addFilter(new JWTAuthenticationFilter(this.authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(this.authenticationManager(), jwtUtil, userDetailsService));
@@ -98,9 +88,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
+
+		//permite acesso aos enpoint com as configurações basicas de varias origens.
+		CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+		//Liberando CORS para PUT e DELETE
+		corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		//permite acesso aos enpoint com as configurações basicas de varias origens. 
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		source.registerCorsConfiguration("/**", corsConfiguration);
+		
 		return source;
 	}
 
