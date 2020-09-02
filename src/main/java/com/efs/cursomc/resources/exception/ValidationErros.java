@@ -3,17 +3,13 @@ package com.efs.cursomc.resources.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationErros extends StandardErros {
-
-	/**
-	 * 
-	 */
+public class ValidationErros extends StandardError {
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<FieldMessage> errors = new ArrayList<FieldMessage>();
 	
-	public ValidationErros(Integer status, String msg, Long timeStamp) {
-		super(status, msg, timeStamp);
+	public ValidationErros(Long timestamp, Integer status, String error, String message, String path) {
+		super(timestamp, status, error, message, path);
 	}
 
 	public List<FieldMessage> getErrors() {
