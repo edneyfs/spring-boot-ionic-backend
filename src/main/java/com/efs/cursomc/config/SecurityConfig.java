@@ -45,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**"};
+			"/categorias/**",
+			"/estados/**"};
 	
 	//permitir acessar sem estar logado - só o POST (para a pessoa poder se cadastrar)
 	private static final String[] PUBLIC_MATCHERS_POST = {
