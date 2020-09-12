@@ -1,5 +1,8 @@
 package com.efs.cursomc.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +50,13 @@ public class ProdutoResource {
 			@RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
 		
 		String nomeDecode = URL.decodeParam(nome);
-		Page<Produto> list = service.search(nomeDecode, URL.decodeIntList(categorias), page, linesPerPage, orderBy, direction);
+		
+		List<Integer> categoriasList = URL.decodeIntList(categorias);
+		if (categoriasList == null) {
+			categoriasList = new ArrayList<>();
+		}
+		
+		Page<Produto> list = service.search(nomeDecode, categoriasList, page, linesPerPage, orderBy, direction);
 		
 		//Page já é java 8
 		Page<ProdutoDTO> listDTO = list.map(produto -> new ProdutoDTO(produto));

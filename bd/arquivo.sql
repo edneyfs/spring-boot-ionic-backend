@@ -26,7 +26,7 @@ CREATE TABLE `categoria` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `categoria` (
 
 LOCK TABLES `categoria` WRITE;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-INSERT INTO `categoria` VALUES (1,'Informática'),(2,'Escritório'),(3,'Cama mesa e banho'),(4,'Eletrônicos'),(5,'Jardinagem'),(6,'Decoração'),(7,'Perfumaria'),(8,'Informática'),(9,'Escritório'),(10,'Cama mesa e banho'),(11,'Eletrônicos'),(12,'Jardinagem'),(13,'Decoração'),(14,'Perfumaria');
+INSERT INTO `categoria` VALUES (1,'Informática'),(2,'Escritório'),(3,'Cama mesa e banho'),(4,'Eletrônicos'),(5,'Jardinagem'),(6,'Decoração'),(7,'Perfumaria');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +53,7 @@ CREATE TABLE `cidade` (
   PRIMARY KEY (`id`),
   KEY `FKkworrwk40xj58kevvh3evi500` (`estado_id`),
   CONSTRAINT `FKkworrwk40xj58kevvh3evi500` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `cidade` (
 
 LOCK TABLES `cidade` WRITE;
 /*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
-INSERT INTO `cidade` VALUES (1,'Uberlândia',1),(2,'São Paulo',2),(3,'Campinas',2),(4,'Uberlândia',3),(5,'São Paulo',4),(6,'Campinas',4);
+INSERT INTO `cidade` VALUES (1,'Uberlândia',1),(2,'São Paulo',2),(3,'Campinas',2);
 /*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,6 +78,7 @@ CREATE TABLE `cliente` (
   `cpf_ou_cnpj` varchar(255) DEFAULT NULL,
   `email` varchar(170) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
   `tipo_cliente` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_cmxo70m08n43599l3h0h07cc6` (`email`)
@@ -90,7 +91,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'190','maria@gmail.com','Maria Silva',1);
+INSERT INTO `cliente` VALUES (1,'36378912377','projetos.estudo.ti@gmail.com','Maria Silva','$2a$10$LRZV3IKAImgwfi5jyUnsUuswYjzq8s.aQQPSWKvLPHet9RdFTilg2',1),(2,'31628382740','edneyfs@gmail.com','Edney','$2a$10$wpwwalzynsp2jLfpLiT6EO.vmxqbSL2cj5dwW0w0oP3zp22l8kzfq',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,7 @@ CREATE TABLE `endereco` (
   KEY `FK8s7ivtl4foyhrfam9xqom73n9` (`cliente_id`),
   CONSTRAINT `FK8b1kcb3wucapb8dejshyn5fsx` FOREIGN KEY (`cidade_id`) REFERENCES `cidade` (`id`),
   CONSTRAINT `FK8s7ivtl4foyhrfam9xqom73n9` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +125,7 @@ CREATE TABLE `endereco` (
 
 LOCK TABLES `endereco` WRITE;
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-INSERT INTO `endereco` VALUES (1,'Jardins','123465','nada','Rua flores','123',1,1),(2,'Centro','456465','sala 10','Av. Matos','105',2,1);
+INSERT INTO `endereco` VALUES (1,'Jardim','38220834','Apto 303','Rua Flores','300',1,1),(2,'Centro','38777012','Sala 800','Avenida Matos','105',2,1),(3,'Centro','281777012',NULL,'Avenida Floriano','2106',2,2);
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +140,7 @@ CREATE TABLE `estado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +149,7 @@ CREATE TABLE `estado` (
 
 LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-INSERT INTO `estado` VALUES (1,'Minas Gerais'),(2,'São Paulo'),(3,'Minas Gerais'),(4,'São Paulo');
+INSERT INTO `estado` VALUES (1,'Minas Gerais'),(2,'São Paulo');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,6 +290,31 @@ INSERT INTO `pedido` VALUES (1,'2017-09-30 10:32:00',1,1),(2,'2017-10-10 19:35:0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `perfis`
+--
+
+DROP TABLE IF EXISTS `perfis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfis` (
+  `cliente_id` int(11) NOT NULL,
+  `perfis` int(11) DEFAULT NULL,
+  KEY `FKsobr8hl9guwr8775lyl1mncg2` (`cliente_id`),
+  CONSTRAINT `FKsobr8hl9guwr8775lyl1mncg2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `perfis`
+--
+
+LOCK TABLES `perfis` WRITE;
+/*!40000 ALTER TABLE `perfis` DISABLE KEYS */;
+INSERT INTO `perfis` VALUES (1,2),(2,1),(2,2);
+/*!40000 ALTER TABLE `perfis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `produto`
 --
 
@@ -300,7 +326,7 @@ CREATE TABLE `produto` (
   `nome` varchar(255) DEFAULT NULL,
   `preco` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +335,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (1,'Computador',2000),(2,'Impressora',800),(3,'Mouse',80),(4,'Mesa de escritório',300),(5,'Toalha',50),(6,'Colcha',200),(7,'TV true color',1200),(8,'Roçadeira',800),(9,'Abajour',100),(10,'Pendente',180),(11,'Shampoo',90),(12,'Computador',2000),(13,'Impressora',800),(14,'Mouse',80),(15,'Mesa de escritório',300),(16,'Toalha',50),(17,'Colcha',200),(18,'TV true color',1200),(19,'Roçadeira',800),(20,'Abajour',100),(21,'Pendente',180),(22,'Shampoo',90);
+INSERT INTO `produto` VALUES (1,'Computador',2000),(2,'Impressora',800),(3,'Mouse',80),(4,'Mesa de escritório',300),(5,'Toalha',50),(6,'Colcha',200),(7,'TV true color',1200),(8,'Roçadeira',800),(9,'Abajour',100),(10,'Pendente',180),(11,'Shampoo',90),(12,'Produto 12',10),(13,'Produto 13',10),(14,'Produto 14',10),(15,'Produto 15',10),(16,'Produto 16',10),(17,'Produto 17',10),(18,'Produto 18',10),(19,'Produto 19',10),(20,'Produto 20',10),(21,'Produto 21',10),(22,'Produto 22',10),(23,'Produto 23',10),(24,'Produto 24',10),(25,'Produto 25',10),(26,'Produto 26',10),(27,'Produto 27',10),(28,'Produto 28',10),(29,'Produto 29',10),(30,'Produto 30',10),(31,'Produto 31',10),(32,'Produto 32',10),(33,'Produto 33',10),(34,'Produto 34',10),(35,'Produto 35',10),(36,'Produto 36',10),(37,'Produto 37',10),(38,'Produto 38',10),(39,'Produto 39',10),(40,'Produto 40',10),(41,'Produto 41',10),(42,'Produto 42',10),(43,'Produto 43',10),(44,'Produto 44',10),(45,'Produto 45',10),(46,'Produto 46',10),(47,'Produto 47',10),(48,'Produto 48',10),(49,'Produto 49',10),(50,'Produto 50',10);
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +362,7 @@ CREATE TABLE `produto_categoria` (
 
 LOCK TABLES `produto_categoria` WRITE;
 /*!40000 ALTER TABLE `produto_categoria` DISABLE KEYS */;
-INSERT INTO `produto_categoria` VALUES (1,1),(2,1),(2,2),(3,1),(4,2),(5,3),(6,3),(7,4),(8,5),(9,6),(10,6),(11,7),(12,8),(13,8),(13,9),(14,8),(15,9),(16,10),(17,10),(18,11),(19,12),(20,13),(21,13),(22,14);
+INSERT INTO `produto_categoria` VALUES (1,1),(1,4),(2,1),(2,2),(2,4),(3,1),(3,4),(4,2),(5,3),(6,3),(7,4),(8,5),(9,6),(10,6),(11,7),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,1),(24,1),(25,1),(26,1),(27,1),(28,1),(29,1),(30,1),(31,1),(32,1),(33,1),(34,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(45,1),(46,1),(47,1),(48,1),(49,1),(50,1);
 /*!40000 ALTER TABLE `produto_categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +387,7 @@ CREATE TABLE `telefone` (
 
 LOCK TABLES `telefone` WRITE;
 /*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
-INSERT INTO `telefone` VALUES (1,'111111'),(1,'2222222');
+INSERT INTO `telefone` VALUES (1,'27363323'),(1,'93838393'),(2,'93883321'),(2,'34252625');
 /*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -374,4 +400,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-30 13:48:51
+-- Dump completed on 2020-09-12 15:21:10

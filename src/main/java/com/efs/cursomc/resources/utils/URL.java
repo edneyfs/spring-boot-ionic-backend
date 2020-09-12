@@ -19,8 +19,13 @@ public class URL {
 //		}
 //		return list;
 //		ou
-		  //                 transformando em lista               para cada elemento da lista     tranformando de novo em lista 
-		return Arrays.asList(valor.split(","))		.stream().map( id -> Integer.parseInt(id)).collect(Collectors.toList());
+		  //                 transformando em lista               para cada elemento da lista     tranformando de novo em lista
+		try {
+			return Arrays.asList(valor.split(","))		.stream().map( id -> Integer.parseInt(id)).collect(Collectors.toList());
+		} catch (java.lang.NumberFormatException e) {
+			System.out.println("URL:: decodeIntList = " + valor);
+			return null;
+		}
 	}
 	
 	/**
