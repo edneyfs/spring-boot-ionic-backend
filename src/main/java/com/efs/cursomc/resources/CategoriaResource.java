@@ -22,6 +22,10 @@ import com.efs.cursomc.domain.Categoria;
 import com.efs.cursomc.dto.CategoriaDTO;
 import com.efs.cursomc.services.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -34,6 +38,7 @@ public class CategoriaResource {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value="find >> Busca por id") // Muda a descricao do metodo no Swagger
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) { // @PathVariable faz a ligação com o parametro value={id}
 		Categoria obj = service.find(id);
@@ -45,6 +50,7 @@ public class CategoriaResource {
 	 * 
 	 * @return
 	 */
+	@ApiOperation(value="findAll >> Retorna todas as categoria") // Muda a descricao do metodo no Swagger
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
@@ -58,6 +64,7 @@ public class CategoriaResource {
 	/**
 	 * 
 	 */
+	@ApiOperation(value="findPage >> Retorna todas as categoria com paginação") // Muda a descricao do metodo no Swagger
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
@@ -78,6 +85,7 @@ public class CategoriaResource {
 	 * @param objDTO
 	 * @return
 	 */
+	@ApiOperation(value="insert >> Insere categoria") // Muda a descricao do metodo no Swagger
 	@PreAuthorize("hasAnyRole('ADMIN')") // so deixa passar se logado com usuário de perfil ADMIN (foi necessário SecurityConfig add @EnableGlobalMethodSecurity(prePostEnabled = true))
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) { // (@RequestBody converte o JSON neste objeto / @Valid vai chamar as validações da classe DTO
@@ -95,6 +103,7 @@ public class CategoriaResource {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value="update >> Atualiza categoria") // Muda a descricao do metodo no Swagger
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
@@ -109,6 +118,10 @@ public class CategoriaResource {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value="delete >> Remove categoria") // Muda a descricao do metodo no Swagger
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") }) // definido no global, SwaggerConfig esta como "não encontrado"
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) { // @PathVariable faz a ligação com o parametro value={id}
