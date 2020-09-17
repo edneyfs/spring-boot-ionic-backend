@@ -1,0 +1,27 @@
+#https://docs.docker.com/compose/compose-file/
+version: "3"
+services:
+  #bando de dados
+  mysqldb:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bootdb
+  #backand
+  backend:
+    image: adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.0.4_11
+    ports:
+      - 8080:8080
+    volumes:
+      - /temp
+      - "./target/cursomc-0.0.1-SNAPSHOT.jar:/app.jar"
+    command: ['java','-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar']
+
+#para rodar > na raiz
+#docker-compose up
+
+#Comandos básicos: up, ps, exec e down
+#• docker-compose up -d: Levanta todos os serviços em modo daemon
+#• docker-compose ps: Similar ao docker ps, mas se limitando aos serviços indicados no docker-compose.yml
+#• docker-compose exec: Similar ao docker exec, mas utilizando como referência o nome do serviço
+#• docker-compose down: Para todos os serviços e remove os containers

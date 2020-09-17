@@ -23,9 +23,14 @@ public class DevConfig {
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
 	
+	//pega o valor definido em application-*.properties
+	@Value("${spring.profiles.active}")
+	private String profile;
+	
 	@Bean
 	public boolean instantieteDatabase() throws ParseException {
 		boolean retorno;
+		System.out.println("******INICIANDO EM AMBIENTE DE " + profile.toUpperCase() + " ****");
 		System.out.println("spring.jpa.hibernate.ddl-auto: " + strategy);
 		
 		if ( ! "create".equals(strategy)) {
